@@ -1,7 +1,8 @@
 import pygame as pg
 import colors as clr
+from vertex import Vertex
 
-class NonDirectedGraph:
+class Graph:
     def __init__(
         self,
         surface: pg.Surface,

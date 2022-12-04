@@ -33,7 +33,7 @@ class Vertex:
         if label:
             self.label = VertexLabel(
                 label,
-                Vertex.font.render(label, True, self.color)
+                self.font.render(label, True, self.color)
             )
         else:
             self.label = VertexLabel()
