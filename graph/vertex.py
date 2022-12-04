@@ -5,15 +5,17 @@ from dataclasses import dataclass, field
 
 import colors as clr
 
-@dataclass(order=True, frozen=True)
+@dataclass(order=True)
 class VertexLabel:
-    sort_index: str = field(init=False)
-    text: str
-    image: Surface
+    sort_index: str = field(init=False, repr=False)
+    text: str = ''
+    image: Surface = None
     rect: Rect = field(init=False)
     
     def __post_init__(self):
         self.sort_index = self.text
+        if self.image is None:
+            self.image = Surface((0, 0))
         self.rect = self.image.get_rect()
     
 class Vertex:
@@ -21,19 +23,24 @@ class Vertex:
     
     def __init__(
         self,
-        label: str,
+        label: str = '',
         position: Vector2 = Vector2(),
         color: clr.Color = clr.BLACK,
         padding_px: int = 10
     ) -> None:
         self.pos = position
-        self.label = VertexLabel(
-            label,
-            Vertex.font.render(label, antialias=True, color=self.color)
-        )
         self.color = color
+
+        if label:
+            self.label = VertexLabel(
+                label,
+                Vertex.font.render(label, True, self.color)
+            )
+        else:
+            self.label = VertexLabel()
         self.padding = padding_px
-        self.radius = Vector2(self.rect.topright).distance_to(self.rect.center) + self.padding
+        
+        self.radius = Vector2(self.label.rect.topright).distance_to(self.label.rect.center) + self.padding*2
         self.rect = Rect(
             -self.radius, -self.radius,
             self.radius*2, self.radius*2
