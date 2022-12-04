@@ -6,7 +6,6 @@ class NonDirectedGraph:
         self,
         surface: pg.Surface,
         vertices: set = set(),
-        vert_radius: int = 100,
         edges: dict = dict(),
     ) -> None:
         self.surface = surface
@@ -14,7 +13,6 @@ class NonDirectedGraph:
         self.vertices = vertices
         self.edges = edges
         
-        self.vert_radius = vert_radius
         self.n_vertices = 0
         self.n_edges = 0
     
