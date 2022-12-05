@@ -2,6 +2,8 @@ from pygame import Vector2, Surface, Color, draw
 from numpy import arange
 from path.commons import lerp
 
+# TODO: Implement the different points in CubicBezier as complex numbers using numpy instead of Vector2
+
 class CubicBezier:
     def __init__(
         self,
