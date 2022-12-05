@@ -1,4 +1,5 @@
 from pygame import Vector2, Surface, Color, draw
+from numpy import arange
 from path.commons import lerp
 
 class CubicBezier:
@@ -28,17 +29,8 @@ class CubicBezier:
         
     
     def draw(self, surface: Surface):
-        t = 0
-        step = 1/self.steps
-        previous = self.calculate(t)
-        while t < 1:
-            t += step
-            current = self.calculate(t)
-            draw.line(surface, self.color, previous, current)
-            previous = current
-    
-        current = self.calculate(1)
-        draw.line(surface, self.color, previous, current)
+        points = [self.calculate(t) for t in arange(0, 1, 1/self.steps)]
+        draw.aalines(surface, self.color, False, points)
 
     
 if __name__ == '__main__':
