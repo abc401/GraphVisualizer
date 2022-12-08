@@ -1,8 +1,10 @@
 # from graph.graph import NonDirectedGraph
-from path.cubicbezier import CubicBezier
+# from path.cubicbezier import CubicBezier
+from path.arcpath import ArcPath
 import pygame
 from pygame.locals import *
 from app import App
+from math import radians
 
 import colors as clr
 
@@ -33,28 +35,76 @@ import colors as clr
 #     def update(self, dt):
 #         return super().update(dt)
 
+# class Bezier(App):
+#     def __init__(self, width: int = 500, height: int = 500, fps: float = 60) -> None:
+#         super().__init__(width, height, fps)
+#         self.bezier = CubicBezier(
+#             pygame.Vector2(10, 10),
+#             pygame.Vector2(480, 10),
+#             pygame.Vector2(480, 10),
+#             pygame.Vector2(480, 480),
+#             clr.BLACK
+#         )
+    
+#     def draw(self):
+#         self.surface.fill(clr.WHITE)
+#         self.bezier.draw(self.surface)
+    
+#     def event_handler(self, event):
+#         super().event_handler(event)
+    
+#     def update(self, dt):
+#         super().update(dt)
+
 class Bezier(App):
     def __init__(self, width: int = 500, height: int = 500, fps: float = 60) -> None:
         super().__init__(width, height, fps)
-        self.bezier = CubicBezier(
-            pygame.Vector2(10, 10),
-            pygame.Vector2(480, 10),
-            pygame.Vector2(480, 10),
-            pygame.Vector2(480, 480),
-            clr.BLACK
-        )
+
+        v1 = pygame.Vector2(200, 100)
+        v2 = pygame.Vector2(300, 100)
+        offset = pygame.Vector2(250, 150)
+        self.arc = ArcPath(v1, offset, v2)
+        
     
     def draw(self):
         self.surface.fill(clr.WHITE)
-        self.bezier.draw(self.surface)
+        self.arc.draw(self.surface)
+        # self.running = False
     
     def event_handler(self, event):
-        super().event_handler(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.arc.update(pygame.Vector2(pygame.mouse.get_pos()))
     
     def update(self, dt):
         super().update(dt)
+
+
+class A(App):
+    def __init__(self, width: int = 500, height: int = 500, fps: float = 60) -> None:
+        super().__init__(width, height, fps)
+
+        self.rect = pygame.Rect(50, 50, 100, 100)
+        p1 = pygame.Vector2(200, 10)
+        p2 = pygame.Vector2()
+        
+    
+    def draw(self):
+        self.surface.fill(clr.WHITE)
+        # pygame.draw.rect(self.surface, (0,0,0), self.rect, 1)
+        pygame.draw.arc(self.surface, clr.BLACK, self.rect, radians(90), radians(360))
+        # self.running = False
+    
+    def event_handler(self, event):
+        pass
+        # if event.type == pygame.MOUSEBUTTONDOWN:
+            # self.arc.update(pygame.Vector2(pygame.mouse.get_pos()))
+    
+    def update(self, dt):
+        super().update(dt)
+    
         
 
 if __name__ == "__main__":
     # GraphVisualizer().run()
-    Bezier().run()
+    # Bezier().run()
+    A().run()

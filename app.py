@@ -31,7 +31,7 @@ class App(ABC):
         pass
     
     @abstractmethod
-    def event_handler(self, event):
+    def event_handler(self, event: pygame.event.Event):
         pass
     
     def run(self):
